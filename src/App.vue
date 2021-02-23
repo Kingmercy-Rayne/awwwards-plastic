@@ -1,19 +1,165 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <div class="cursor" id="customCursor" ref="customCursor" :style="cursorVars"></div>
+    <span class="logo h5-alt" :style="[!isNavOpen ? { color: '#000' } : { color: '#fff' }]"
+      >Plastic.</span
+    >
+    <Hamburger @click.native="fireAway()" :nav-menu="this.isNavOpen" />
+    <transition @before-enter="beforeNavEnter" @enter="navEnter" @leave="navLeave" :css="false">
+      <NavMenu v-if="isNavOpen" />
+    </transition>
+    <router-view></router-view>
   </div>
 </template>
 
+<script>
+import anime from 'animejs';
+import NavMenu from '@/components/NavMenu.vue';
+import Hamburger from '@/components/Hamburger.vue';
+
+export default {
+  components: {
+    NavMenu,
+    Hamburger,
+  },
+  data() {
+    return {
+      isNavOpen: false,
+    };
+  },
+  computed: {
+    // Create computed-style to mitigate specificity issue that arises upon direct style bind
+    cursorVars() {
+      if (this.isNavOpen) {
+        return { '--cursor-bg-color': '#fff' };
+      }
+      return { '--cursor-bg-color': '#000' };
+    },
+  },
+  methods: {
+    fireAway() {
+      this.isNavOpen = !this.isNavOpen;
+    },
+    //  eslint-disable-next-line
+    beforeNavEnter(el, done) {
+      anime({
+        targets: '.nav-menu',
+        // height: 0,
+        // translateY: [-200],
+        opacity: 0.2,
+      });
+    },
+
+    //  eslint-disable-next-line
+    navEnter(el, done) {
+      anime({
+        targets: '.nav-menu',
+        // scaleY: [-0.6, 1],
+        // translateY: [-200, 0],
+        opacity: [0.2, 1],
+        duration: 800,
+        height: '100%',
+      });
+      done();
+    },
+
+    //  eslint-disable-next-line
+    navLeave(el, done) {
+      done();
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const customCursor = document.getElementById('customCursor');
+      const hamburger = document.getElementById('hamburger');
+
+      // change VH varable
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+      // mouse cursor tracking
+      //  eslint-disable-next-line
+      window.addEventListener('mousemove', function fireCursorEvent(e) {
+        customCursor.style.top = `${e.pageY}px`;
+        customCursor.style.left = `${e.pageX}px`;
+      });
+
+      //  eslint-disable-next-line
+      hamburger.addEventListener('mouseover', function hamburgerHover(e) {
+        customCursor.classList.add('cursor--grow');
+      });
+      //  eslint-disable-next-line
+      hamburger.addEventListener('mouseleave', function hamburgerHover(e) {
+        customCursor.classList.remove('cursor--grow');
+      });
+    });
+  },
+};
+</script>
+
 <style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+#app {
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100vh;
+  width: 100%;
+  font-family: var(--font-family--primary);
+  cursor: none;
+  overflow: hidden;
+
+  .logo {
+    z-index: 10;
+    position: absolute;
+    left: 3%;
+    top: 4%;
+    transform: rotate(-180deg);
+    // transform: rotate(-90deg);
+    // color: #000;
+    text-transform: capitalize;
+    writing-mode: vertical-rl;
+    // transform: translateX(50%);
+  }
+}
+
+.cursor {
+  position: absolute;
+  // throw it outta the viewport
+  top: -5%;
+  z-index: 4000;
+  width: 1rem;
+  height: 1rem;
+  transform: translate(-50%, -50%);
+  // border: solid 2px var(--border-color--primary);
+  background: #fff;
+  background: var(--cursor-bg-color);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform, border 0.1ms ease-in;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
+.cursor--grow {
+  transform: scale(3.5);
+  background: transparent;
+  border: none;
+  z-index: 20;
+  // backdrop-filter: blur(2px);
+  backdrop-filter: invert(1.3);
+  transition: all 100ms cubic-bezier(0.45, -0.19, 0.16, 1.16);
+}
+
+.cursor--hide {
+  // visibility: hidden;
+  transform: scale(4);
+  background: transparent;
+  border: none;
+  z-index: 20;
+  backdrop-filter: grayscale();
+}
 </style>
