@@ -3,7 +3,7 @@
     <span class="label" v-show="isHoverActive">{{ ordinal }}</span>
     <div
       class="h2 nav-item"
-      :class="{ 'nav-item--active': isHoverActive }"
+      :class="[{ 'nav-item--active': isHoverActive }, { ordinal }]"
       @mouseover="isHoverActive = true"
       @mouseleave="isHoverActive = false"
     >
@@ -53,6 +53,8 @@ export default {
   position: relative;
   padding: 0.1em;
   margin: 1.1em 0;
+  opacity: 0;
+  transform: translateY(10vh);
 }
 
 span {

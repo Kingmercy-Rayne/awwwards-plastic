@@ -1,7 +1,7 @@
 <template>
   <div class="hamburger" id="hamburger" :style="cssVars">
-    <div class="bar"></div>
-    <div class="bar2"></div>
+    <div class="bar1 bar1-alt"></div>
+    <div class="bar2 bar2-alt"></div>
   </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
     height: 0.2rem;
   }
 
-  .bar {
+  .bar1 {
     width: 1.6rem;
   }
 
@@ -52,6 +52,16 @@ export default {
     width: 1rem;
     margin-top: 0.2em;
     // transform: translateX(-50%);
+  }
+
+  .bar1--alt {
+    transform: rotate(40deg);
+  }
+
+  .bar2--alt {
+    transform: rotate(130deg);
+    width: 1.6rem;
+    margin-top: -0.2em;
   }
 }
 </style>

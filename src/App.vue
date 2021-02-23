@@ -44,27 +44,73 @@ export default {
     beforeNavEnter(el, done) {
       anime({
         targets: '.nav-menu',
-        // height: 0,
-        // translateY: [-200],
         opacity: 0.2,
       });
     },
 
     //  eslint-disable-next-line
     navEnter(el, done) {
-      anime({
+      const tl = anime.timeline();
+      tl.add({
         targets: '.nav-menu',
         // scaleY: [-0.6, 1],
         // translateY: [-200, 0],
         opacity: [0.2, 1],
         duration: 800,
         height: '100%',
-      });
+        easing: 'easeOutElastic(8,2)',
+      })
+        .add(
+          {
+            targets: '.nav-item',
+            opacity: 1,
+            translateY: 0,
+            duration: 120,
+            delay: anime.stagger(150, { easing: 'easeOutQuad' }),
+            // delay: 100,
+          },
+          50,
+        )
+        .add(
+          {
+            targets: '.hamburger .bar1',
+            rotate: 40,
+            easing: 'easeInOutSine',
+            duration: 200,
+          },
+          150,
+        )
+        .add(
+          {
+            targets: '.hamburger .bar2',
+            rotate: 130,
+            width: '1.6rem',
+            translateY: '0.4em',
+            translateX: '-0.4em',
+            easing: 'easeInOutSine',
+            duration: 200,
+          },
+          200,
+        );
+
       done();
     },
 
     //  eslint-disable-next-line
     navLeave(el, done) {
+      anime({
+        targets: '.hamburger .bar1',
+        rotate: 0,
+      });
+      anime({
+        targets: '.hamburger .bar2',
+        rotate: 0,
+        width: '1rem',
+        translateY: 0,
+        translateX: 0,
+        easing: 'easeInOutSine',
+        duration: 400,
+      });
       done();
     },
   },
