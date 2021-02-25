@@ -5,7 +5,13 @@
       >Plastic.</span
     >
     <Hamburger @click.native="fireAway()" :nav-menu="this.isNavOpen" />
-    <transition @before-enter="beforeNavEnter" @enter="navEnter" @leave="navLeave" :css="false">
+    <transition
+      @before-enter="beforeNavEnter"
+      @enter="navEnter"
+      @leave="navLeave"
+      :css="false"
+      mode="out-in"
+    >
       <NavMenu v-if="isNavOpen" />
     </transition>
     <router-view></router-view>
@@ -42,9 +48,13 @@ export default {
     },
     //  eslint-disable-next-line
     beforeNavEnter(el, done) {
-      anime({
+      const tl = anime.timeline();
+      tl.add({
         targets: '.nav-menu',
         opacity: 0.2,
+      }).add({
+        targets: '.navlinks__main',
+        translateY: '40%',
       });
     },
 
@@ -55,11 +65,21 @@ export default {
         targets: '.nav-menu',
         // scaleY: [-0.6, 1],
         // translateY: [-200, 0],
-        opacity: [0.2, 1],
-        duration: 800,
+        opacity: 1,
+        duration: 2000,
         height: '100%',
-        easing: 'easeOutElastic(8,2)',
+        easing: 'easeOutElastic(0.9,2)',
+        // easing: 'easeInQuart',
       })
+        .add(
+          {
+            targets: '.navlinks__main',
+            translateY: [-20, 0],
+            duration: 50,
+            easing: 'easeInOutQuad',
+          },
+          300,
+        )
         .add(
           {
             targets: '.nav-item',
@@ -70,6 +90,17 @@ export default {
             // delay: 100,
           },
           50,
+        )
+        .add(
+          {
+            targets: '.socials-item',
+            opacity: 1,
+            translateY: 0,
+            duration: 40,
+            delay: anime.stagger(100, { easing: 'easeOutQuad' }),
+            // delay: 100,
+          },
+          10,
         )
         .add(
           {
@@ -85,8 +116,8 @@ export default {
             targets: '.hamburger .bar2',
             rotate: 130,
             width: '1.6rem',
-            translateY: '0.4em',
-            translateX: '-0.4em',
+            translateY: '0.3em',
+            translateX: '-0.3em',
             easing: 'easeInOutSine',
             duration: 200,
           },
@@ -98,19 +129,37 @@ export default {
 
     //  eslint-disable-next-line
     navLeave(el, done) {
-      anime({
-        targets: '.hamburger .bar1',
-        rotate: 0,
-      });
-      anime({
-        targets: '.hamburger .bar2',
-        rotate: 0,
-        width: '1rem',
-        translateY: 0,
-        translateX: 0,
-        easing: 'easeInOutSine',
-        duration: 400,
-      });
+      const tl = anime.timeline();
+      tl.add(
+        {
+          targets: '.nav-menu',
+          opacity: 0.4,
+          duration: 100,
+          // height: 40,
+          background: 'yellow',
+          // easing: 'easeOutElastic(8,2)',
+        },
+        10,
+      )
+        .add({
+          targets: '.hamburger .bar1',
+          rotate: 0,
+          duration: 600,
+          complete: done,
+        })
+        .add(
+          {
+            targets: '.hamburger .bar2',
+            rotate: 0,
+            width: '1rem',
+            translateY: 0,
+            translateX: 0,
+            easing: 'easeInOutSine',
+            duration: 400,
+          },
+          10,
+        );
+
       done();
     },
   },
@@ -190,14 +239,21 @@ export default {
   }
 }
 
-.cursor--grow {
-  transform: scale(3.5);
+.cursor--grow, .cursor--grow-mid {
   background: transparent;
   border: none;
   z-index: 20;
   // backdrop-filter: blur(2px);
   backdrop-filter: invert(1.3);
   transition: all 100ms cubic-bezier(0.45, -0.19, 0.16, 1.16);
+}
+
+.cursor--grow {
+  transform: scale(3.5);
+}
+
+.cursor--grow-mid {
+  transform: scale(2.5);
 }
 
 .cursor--hide {

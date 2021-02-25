@@ -31,8 +31,9 @@ export default {
   mounted() {
     const customCursor = document.getElementById('customCursor');
     const navSelector = document.querySelectorAll('.nav-item');
+    const socialsSelector = document.querySelectorAll('.socials-item');
 
-    //  eslint-disable-next-line
+    //  Select nav list
     //  eslint-disable-next-line
     Array.from(navSelector).forEach((item) => {
       item.addEventListener('mouseover', () => {
@@ -41,6 +42,17 @@ export default {
 
       item.addEventListener('mouseleave', () => {
         customCursor.classList.remove('cursor--grow');
+      });
+    });
+
+    // Select socials
+    Array.from(socialsSelector).forEach((item) => {
+      item.addEventListener('mouseover', () => {
+        customCursor.classList.add('cursor--grow-mid');
+      });
+
+      item.addEventListener('mouseleave', () => {
+        customCursor.classList.remove('cursor--grow-mid');
       });
     });
   },
@@ -80,6 +92,7 @@ export default {
     // height: auto;
     .socials-item {
       padding: 0.8em 0;
+      opacity: 0;
     }
   }
 }
