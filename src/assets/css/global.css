@@ -82,9 +82,10 @@ h1,
 .h1 {
   font-family: Nunito;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   /* font-size: 48px; */
   font-size: 3rem;
+  font-size: 4rem;
   line-height: 58px;
 }
 
@@ -92,7 +93,7 @@ h2,
 .h2 {
   font-family: Nunito;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   /* font-size: 39px; */
   font-size: 2.43rem;
   line-height: 47px;
@@ -102,7 +103,7 @@ h3,
 .h3 {
   font-family: Nunito;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   /* font-size: 31px; */
   font-size: 1.93rem;
   line-height: 37px;

@@ -1,5 +1,13 @@
 <template>
   <div class="nav-menu">
+    <div
+      class="showreel h4"
+      @mouseenter="fireShowreelHoverEvent"
+      @mouseleave="fireShowreelExitEvent"
+    >
+      Our Showreel
+      <div class="showreel-divider"></div>
+    </div>
     <ul class="navlinks__main">
       <NavItem name="Work." ordinal="01" />
       <NavItem name="About." ordinal="02" />
@@ -7,18 +15,19 @@
       <NavItem name="Contact." ordinal="04" />
     </ul>
     <ul class="navlinks__sub">
-      <span class="socials-item h5">Behance</span>
-      <span class="socials-item h5">Dribbble</span>
-      <span class="socials-item h5">Instagram</span>
-      <span class="socials-item h5">LInkedIn</span>
-      <span class="socials-item h5">Medium</span>
-      <span class="socials-item h5">Twitter</span>
+      <span class="socials-item h4">Behance</span>
+      <span class="socials-item h4">Dribbble</span>
+      <span class="socials-item h4">Instagram</span>
+      <span class="socials-item h4">LInkedIn</span>
+      <span class="socials-item h4">Medium</span>
+      <span class="socials-item h4">Twitter</span>
     </ul>
   </div>
 </template>
 
 <script>
 import NavItem from '@/components/NavItem.vue';
+import anime from 'animejs';
 
 export default {
   components: {
@@ -27,11 +36,26 @@ export default {
   methods: {
     fireNavlinkHoverEvent() {},
     removeNavlinkHoverEvent() {},
+    fireShowreelHoverEvent() {
+      anime({
+        targets: '.showreel-divider',
+        width: '99%',
+        easing: 'spring(1, 100, 9, 0)',
+        delay: 0,
+      });
+    },
+    fireShowreelExitEvent() {
+      anime({
+        targets: '.showreel-divider',
+        width: '15%',
+      });
+    },
   },
   mounted() {
     const customCursor = document.getElementById('customCursor');
     const navSelector = document.querySelectorAll('.nav-item');
     const socialsSelector = document.querySelectorAll('.socials-item');
+    const showreelSelector = document.querySelector('.showreel');
 
     //  Select nav list
     //  eslint-disable-next-line
@@ -55,6 +79,14 @@ export default {
         customCursor.classList.remove('cursor--grow-mid');
       });
     });
+
+    // Select showreel
+    showreelSelector.addEventListener('mouseover', () => {
+      customCursor.classList.add('cursor--grow-mid');
+    });
+    showreelSelector.addEventListener('mouseleave', () => {
+      customCursor.classList.remove('cursor--grow-mid');
+    });
   },
 };
 </script>
@@ -70,7 +102,7 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0vh 8%;
+  padding: 0vh 0%;
 
   .navlinks__main {
     color: white;
@@ -91,9 +123,26 @@ export default {
 
     // height: auto;
     .socials-item {
-      padding: 0.8em 0;
+      margin: 0.8em 0;
       opacity: 0;
     }
+  }
+
+  .showreel, .showreel-divider {
+    position: absolute;
+  }
+
+  .showreel {
+    left: 5%;
+    bottom: 5%;
+    color: #fff;
+  }
+
+  .showreel-divider {
+    bottom: -0.2em;
+    width: 2.2rem;
+    height: 0.2rem;
+    background: #fff;
   }
 }
 </style>

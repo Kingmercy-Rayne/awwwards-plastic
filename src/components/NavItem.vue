@@ -2,7 +2,7 @@
   <fragment>
     <span class="label" v-show="isHoverActive">{{ ordinal }}</span>
     <div
-      class="h2 nav-item"
+      class="h1 nav-item"
       :class="[{ 'nav-item--active': isHoverActive }, { ordinal }]"
       @mouseover="isHoverActive = true"
       @mouseleave="isHoverActive = false"
@@ -52,7 +52,7 @@ export default {
 .nav-item {
   position: relative;
   padding: 0.1em;
-  margin: 1.1em 0;
+  margin: 0.7em 0;
   opacity: 0;
   transform: translateY(10vh);
 }
@@ -61,7 +61,7 @@ span {
   position: relative;
   font-size: 0.1em;
   left: -3vw;
-  transform: translateY(450%);
+  transform: translateY(550%);
   transition: all 0.3s cubic-bezier(0.45, -0.19, 0.16, 1.16);
 }
 </style>

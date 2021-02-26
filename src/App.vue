@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="cursor" id="customCursor" ref="customCursor" :style="cursorVars"></div>
-    <span class="logo h5-alt" :style="[!isNavOpen ? { color: '#000' } : { color: '#fff' }]"
+    <span class="logo h3" :style="[!isNavOpen ? { color: '#000' } : { color: '#fff' }]"
       >Plastic.</span
     >
     <Hamburger @click.native="fireAway()" :nav-menu="this.isNavOpen" />
@@ -122,6 +122,15 @@ export default {
             duration: 200,
           },
           200,
+        )
+        .add(
+          {
+            targets: '.showreel',
+            opacity: [0, 1],
+            translateX: [-10, 0],
+            duration: 2000,
+          },
+          300,
         );
 
       done();
@@ -249,7 +258,7 @@ export default {
 }
 
 .cursor--grow {
-  transform: scale(3.5);
+  transform: scale(4);
 }
 
 .cursor--grow-mid {
