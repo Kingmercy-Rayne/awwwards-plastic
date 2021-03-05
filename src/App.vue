@@ -15,6 +15,27 @@
       <NavMenu v-if="isNavOpen" />
     </transition>
     <router-view></router-view>
+    <div class="fab">
+      <!--eslint-disable-->
+      <svg
+        width="40px"
+        height="40px"
+        viewBox="0 0 40 40"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-48.000000, -960.000000)" fill="#000000" class="fill" style="">
+            <path
+              d="M68,960 C79.045695,960 88,968.954305 88,980 C88,991.045695 79.045695,1000 68,1000 C56.954305,1000 48,991.045695 48,980 C48,968.954305 56.954305,960 68,960 Z M74,975 L62,975 L62,983 L66,983 L70,986 L70,983 L74,983 L74,975 Z"
+            />
+          </g>
+        </g>
+      </svg>
+      <!--eslint-enable-->
+      <span class="h5-alt">Let's talk</span>
+    </div>
   </div>
 </template>
 
@@ -207,7 +228,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000;
   height: 100vh;
   width: 100%;
   font-family: var(--font-family--primary);
@@ -217,14 +238,36 @@ export default {
   .logo {
     z-index: 10;
     position: absolute;
-    left: 3%;
     top: 4%;
+    left: 3%;
     transform: rotate(-180deg);
     // transform: rotate(-90deg);
     // color: #000;
     text-transform: capitalize;
     writing-mode: vertical-rl;
     // transform: translateX(50%);
+  }
+
+  .fab {
+    position: absolute;
+    bottom: 8%;
+    left: 3%;
+    transform: rotate(-180deg);
+    writing-mode: vertical-rl;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      flex-basis: 70%;
+      margin: 1em 0;
+    }
+
+    svg {
+      // display: none;
+      transform: rotate(180deg) scale(1.2);
+    }
   }
 }
 
