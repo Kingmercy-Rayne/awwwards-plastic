@@ -291,13 +291,14 @@ export default {
   }
 }
 
-.cursor--grow, .cursor--grow-mid {
+.cursor--grow, .cursor--grow-mid, .cursor--grow-lg {
   background: transparent;
   border: none;
   z-index: 20;
   // backdrop-filter: blur(2px);
   backdrop-filter: invert(1.3);
-  transition: all 100ms cubic-bezier(0.45, -0.19, 0.16, 1.16);
+  // transition: all 100ms cubic-bezier(0.45, -0.19, 0.16, 1.16);
+  transition: all 100ms ease-in;
 }
 
 .cursor--grow {
@@ -308,6 +309,10 @@ export default {
   transform: scale(2.5);
 }
 
+.cursor--grow-lg {
+  transform: scale(6);
+}
+
 .cursor--hide {
   // visibility: hidden;
   transform: scale(4);
@@ -315,5 +320,6 @@ export default {
   border: none;
   z-index: 20;
   backdrop-filter: grayscale();
+  transition: all 220ms ease-in-out;
 }
 </style>

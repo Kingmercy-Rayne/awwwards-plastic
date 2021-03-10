@@ -91,11 +91,13 @@
     </section>
     <section class="cta">
       <span class="h4-alt">Got a project?</span>
-      <span class="cta__mega h1">Let's talk</span>
-      <i class="cta__icon fas fa-lg fa fa-arrow-right"></i>
+      <span class="cta__mega h1" @mouseover="fireCtaHover" @mouseleave="removeCtaHover"
+        >Let's talk</span
+      >
+      <i class="cta__icon fa fa-xs fa-arrow-right"></i>
     </section>
     <footer>
-      <span class="h5">2019 Plastic</span>
+      <span class="h5">&copy; 2019 Plastic</span>
       <ul class="footer-links">
         <li class="h5">Privacy Policy</li>
         <li class="h5">Cookies Policy</li>
@@ -107,17 +109,56 @@
 
 <script>
 // @ is an alias to /src
+import anime from 'animejs';
 
 export default {
   name: 'Home',
   components: {},
+  methods: {
+    fireCtaHover() {
+      anime({
+        targets: '.cta__icon',
+        opacity: 1,
+        duration: 250,
+        delay: 90,
+        translateY: ['80px', 0],
+        rotateZ: { value: [0, '30deg', '45deg'], delay: 130 },
+        easing: 'easeInOutCirc',
+      });
+    },
+    removeCtaHover() {
+      anime({
+        targets: '.cta__icon',
+        opacity: 0,
+        duration: 350,
+        delay: 90,
+        translateY: [0, '80px'],
+        rotateZ: { value: [0], delay: 90 },
+        easing: 'easeInOutCirc',
+      });
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const customCursor = document.getElementById('customCursor');
+      const ctaMega = document.querySelector('.cta__mega');
+
+      //  eslint-disable-next-line
+      ctaMega.addEventListener('mouseover', function hamburgerHover(e) {
+        customCursor.classList.add('cursor--grow-lg');
+      });
+      //  eslint-disable-next-line
+      ctaMega.addEventListener('mouseleave', function hamburgerHover(e) {
+        customCursor.classList.remove('cursor--grow-lg');
+      });
+    });
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
 .ps {
   height: 700px;
-  background: crimson;
   height: 100vh;
 }
 
@@ -292,6 +333,13 @@ export default {
   .cta__mega {
     font-size: 7.2rem;
     padding: 0.5em 0;
+  }
+
+  .cta__icon {
+    font-size: 5.2rem;
+    font-weight: 400;
+    // margin: 0.3em 0;
+    opacity: 0;
   }
 }
 
