@@ -66,6 +66,7 @@ html {
   width: 100%;
   color: var(--text-color--primary);
   font-family: 'Montserrat', 'Catamaran', Avenir, Helvetica, Arial, sans-serif;
+  cursor: none;
 }
 
 img {
@@ -120,7 +121,7 @@ h4,
   line-height: 30px;
 }
 .h4-alt {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 h5,
