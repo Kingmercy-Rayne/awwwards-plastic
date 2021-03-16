@@ -43,6 +43,10 @@
 import anime from 'animejs';
 import NavMenu from '@/components/NavMenu.vue';
 import Hamburger from '@/components/Hamburger.vue';
+import { gsap } from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   components: {
@@ -88,7 +92,7 @@ export default {
         // translateY: [-200, 0],
         opacity: 1,
         duration: 2000,
-        height: '100%',
+        height: [0, '100%'],
         easing: 'easeOutElastic(0.9,2)',
         // easing: 'easeInQuart',
       })
@@ -110,7 +114,7 @@ export default {
             delay: anime.stagger(150, { easing: 'easeOutQuad' }),
             // delay: 100,
           },
-          50,
+          120,
         )
         .add(
           {
@@ -119,18 +123,17 @@ export default {
             translateY: 0,
             duration: 40,
             delay: anime.stagger(100, { easing: 'easeOutQuad' }),
-            // delay: 100,
           },
-          10,
+          100,
         )
         .add(
           {
             targets: '.hamburger .bar1',
             rotate: 40,
             easing: 'easeInOutSine',
-            duration: 200,
+            duration: 300,
           },
-          150,
+          50,
         )
         .add(
           {
@@ -139,17 +142,18 @@ export default {
             width: '1.6rem',
             translateY: '0.3em',
             translateX: '-0.3em',
-            easing: 'easeInOutSine',
-            duration: 200,
+            easing: 'easeOutQuint',
+            duration: 450,
           },
-          200,
+          80,
         )
         .add(
           {
             targets: '.showreel',
             opacity: [0, 1],
-            translateX: [-10, 0],
-            duration: 2000,
+            translateX: [-40, 0],
+            easing: 'easeInQuint',
+            duration: 1000,
           },
           300,
         );
@@ -197,6 +201,15 @@ export default {
     this.$nextTick(() => {
       const customCursor = document.getElementById('customCursor');
       const hamburger = document.getElementById('hamburger');
+
+      // Page-scroll events
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.kane',
+          start: 'center bottom',
+        },
+      });
+      tl.to('.foley', { y: 190, opacity: 0.2 });
 
       // change VH varable
       const vh = window.innerHeight * 0.01;

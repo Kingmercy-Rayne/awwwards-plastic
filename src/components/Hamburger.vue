@@ -10,8 +10,8 @@ export default {
   props: ['navMenu'],
   computed: {
     cssVars() {
-      const value = this.navMenu;
-      console.log(value);
+      // const value = this.navMenu;
+      // console.log(value);
       if (this.navMenu === true) {
         return {
           '--hamburger-background': '#fff',
@@ -37,8 +37,6 @@ export default {
   padding: 1em 2vw 1em 1vw;
 
   & > * {
-    --hamburger-backgrounds: yellow;
-    background: #000;
     background: var(--hamburger-background);
     mix-blend-mode: difference;
     height: 0.2rem;

@@ -1,5 +1,5 @@
 <template>
-  <perfect-scrollbar :class="home">
+  <perfect-scrollbar>
     <!-- <div class="home">Hello World</div> -->
     <section class="section-1">
       <div class="initials"></div>
@@ -110,6 +110,10 @@
 <script>
 // @ is an alias to /src
 import anime from 'animejs';
+import { gsap } from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: 'Home',
@@ -139,9 +143,41 @@ export default {
     },
   },
   mounted() {
+    ScrollTrigger.create({
+      trigger: '.kurt',
+      start: 'top 100px',
+      end: 'bottom bottom-=100px',
+      // markers: { startColor: 'white', endColor: 'white' },
+      // scrub: true,
+      // animation: animation,
+      onEnter: () => {
+        console.log('anime active');
+        anime({
+          targets: '.burk',
+          opacity: [1, 0],
+          translateY: 120,
+          duration: 300,
+        });
+      },
+      // onLeave: () => logRed('onLeave'),
+      // onEnterBack: () => logRed('onEnterBack'),
+      // onLeaveBack: () => logRed('onLeaveBack'),
+      // onRefresh: () => logRed('onRefresh'),
+      // onUpdate: (self) => (redProgress.innerText = 'progress: ' + self.progress.toFixed(3)),
+    });
+
     this.$nextTick(() => {
       const customCursor = document.getElementById('customCursor');
       const ctaMega = document.querySelector('.cta__mega');
+
+      // Page-scroll events
+      // const tl = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: '.kane',
+      //     start: 'center bottom',
+      //   },
+      // });
+      // tl.to('.foley', { y: 190, opacity: 0.2 });
 
       //  eslint-disable-next-line
       ctaMega.addEventListener('mouseover', function hamburgerHover(e) {
